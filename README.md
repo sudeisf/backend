@@ -20,6 +20,12 @@ A simple RESTful API for managing tasks built with Express.js.
 - Node.js 
 - npm (Node Package Manager)
 
+## Used Libraries
+
+- **express**: Web framework for Node.js
+- **ejs**: Embedded JavaScript templating engine
+- **nodemon**: Development tool that automatically restarts the server when file changes are detected
+
 ## Installation
 
 1. Clone the repository:
@@ -70,6 +76,13 @@ The server will start running on `http://localhost:5000`
 ## Data Storage
 
 Tasks are stored in a JSON file located at `data/tasks.json`. The file is automatically created when the first task is added.
+
+## Check if running (test)
+By putting this url in ur broswer you can can check if the api is runung
+```
+    http://localhost:5000/
+```
+
 
 ## Project Structure
 
