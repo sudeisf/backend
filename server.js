@@ -18,14 +18,14 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/api/tasks',(req,res)=>{
-    const tasks = readUsers();
+    const tasks = readTasks();
     if (!tasks) {
         res.status(200).json({message : "there is not tasks to show yet"})
     }
     res.json(tasks)
 })
 app.post('/api/tasks',(req,res)=>{
-    const tasks = readUsers()
+    const tasks = readTasks()
     const {title} = req.body;
     if(!title){
         res.status(400).json({error : "title is required"})
