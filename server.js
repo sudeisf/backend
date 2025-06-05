@@ -1,8 +1,7 @@
-const { error } = require('console');
+
 const express  = require('express');
 const fs = require('fs');
 const path = require('path');
-const { title } = require('process');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -35,6 +34,8 @@ app.get('/api/tasks',(req,res)=>{
 app.post('/api/tasks',(req,res)=>{
     const tasks = readTasks()
     const {title} = req.body;
+
+    //title checking / validating 
     if(!title){
         return res.status(400).json({error : "title is required"})
     }
@@ -50,8 +51,11 @@ app.post('/api/tasks',(req,res)=>{
 
 app.put('/api/tasks/:id',(req,res)=>{
     const tasks = readTasks();
+
+    //task checking
     const index = tasks.findIndex((task)=>task.id === parseInt(req.params.id));
     if(index === -1 ) return res.status(400).json({message : "task not found"});
+
     tasks[index] ={...tasks[index], ...req.body}
     writeTasks(tasks);
     res.status(200).json(tasks[index]);
@@ -59,7 +63,13 @@ app.put('/api/tasks/:id',(req,res)=>{
 
 app.delete('/api/tasks/:id',(req,res)=>{
     let tasks = readTasks();
-    tasks = tasks.filter((task) => task.id !== parseInt(req.params.id));
+    const id = parseInt(req.params.id)
+    //validating task if it exisits
+    const exists = tasks.some(task => task.id === id);
+    if (!exists) {
+        return res.status(404).json({ error: "Task not found" });
+    }
+    tasks = tasks.filter((task) => task.id !== id);
     writeTasks(tasks);
     res.status(200).json({message : "Task deleted"});
 })
